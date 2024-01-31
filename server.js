@@ -21,6 +21,7 @@ app.use((req, res, next) => {
   console.log('Here')
 
   const parts = req.hostname.split('.');
+  console.log(parts);
   const subdomain = parts[0];
 
   console.log(subdomain)
