@@ -31,7 +31,7 @@ app.use(vhost('blog.localhost', blogApp));
 app.use(vhost('*.localhost', defaultRouter));
 
 // The rest of your Express app setup and server listening code
-const port = 3000;
-app.listen(port, '127.0.0.1', () => {
+const port = 8080;
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
