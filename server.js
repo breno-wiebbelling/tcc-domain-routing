@@ -1,38 +1,37 @@
 const express = require('express');
+const vhost = require('vhost');
+
 const app = express();
 
-const originalRouter = express.Router();
-const userCustomRouter = express.Router();
+// Define routers for each domain
+const blogApp = express.Router();
 const defaultRouter = express.Router();
 
-originalRouter.get('/', (req, res) => {
-  res.send('Hello from originalAppName.com');
+// Routes for blogApp
+blogApp.get('/', (req, res) => {
+  res.send('Welcome to the blog!');
 });
 
-userCustomRouter.get('/', (req, res) => {
-  res.send('Hello from originalAppName.userCustomRouter.com');
+blogApp.get('/post/:postId', (req, res) => {
+  const postId = req.params.postId;
+  res.send(`Viewing blog post ${postId}`);
 });
 
-defaultRouter.get('/', (req,res) => {
-  res.send('Default')
-})
-
-app.use((req, res, next) => {
-  const parts = req.hostname.split('.');
-  const subdomain = parts[0];
-
-  console.log(parts)
-
-  switch (subdomain) {
-    case 'breno':
-      return originalRouter(req, res, next);
-    case 'usercustom':
-      return userCustomRouter(req, res, next);
-    default:
-      return defaultRouter(req, res, next);
-  }
+// Routes for defaultRouter
+defaultRouter.get('/', (req, res) => {
+  res.send('Welcome to the default route!');
 });
 
-app.listen(8080, () => {
-  console.log(`Server is running on port`);
+defaultRouter.get('/about', (req, res) => {
+  res.send('About page');
+});
+
+// Use vhost middleware to handle different subdomains with different routers
+app.use(vhost('blog.localhost', blogApp));
+app.use(vhost('*.localhost', defaultRouter));
+
+// The rest of your Express app setup and server listening code
+const port = 3000;
+app.listen(port, '127.0.0.1', () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
