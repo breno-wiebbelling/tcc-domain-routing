@@ -18,21 +18,18 @@ defaultRouter.get('/', (req,res) => {
 })
 
 app.use((req, res, next) => {
-  // const parts = req.hostname.split('.');
-  // const subdomain = parts[0];
+  const parts = req.hostname.split('.');
+  console.log(parts)
+  const subdomain = parts[0];
 
-  console.log(req.hostname)
-
-  // switch (subdomain) {
-  //   case 'breno':
-  //     return originalRouter(req, res, next);
-  //   case 'usercustom':
-  //     return userCustomRouter(req, res, next);
-  //   default:
-  //     return defaultRouter(req, res, next);
-  // }
-  return defaultRouter(req, res, next);
-  
+  switch (subdomain) {
+    case 'breno':
+      return originalRouter(req, res, next);
+    case 'usercustom':
+      return userCustomRouter(req, res, next);
+    default:
+      return defaultRouter(req, res, next);
+  }  
 });
 
 app.listen(8080, () => {
