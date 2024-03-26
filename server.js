@@ -13,16 +13,15 @@ defaultRouter.get('/', (req,res) => {
 })
 
 app.use((req, res, next) => {
-  const parts = req.hostname.split('.');
+  const subdomains = req.hostname.split('.');
+  let hostSize = ((subdomains[subdomains.length-1]) === 'localhost') ? 1 : 2;
 
-  res.send(parts)
-  // if(parts.length>1){
-  //   return userCustomRouter(req, res, next);
-  // }
-  // else{
-  //   return defaultRouter(req, res, next);
-  //
-  // }
+  if(subdomains.length>hostSize){
+    return userCustomRouter(req, res, next);
+  }
+  else{
+    return defaultRouter(req, res, next);
+  }
 });
 
 let SERVER_PORT = 8090;
