@@ -14,14 +14,14 @@ defaultRouter.get('/', (req,res) => {
 
 app.use((req, res, next) => {
   const parts = req.hostname.split('.');
-  const subdomain = parts[parts.length-2];
 
-  switch (subdomain) {
-    case 'routes':
-      return userCustomRouter(req, res, next);
-    default:
-      return defaultRouter(req, res, next);
-  }  
+  if(parts.length>1){
+    return userCustomRouter(req, res, next);
+  }
+  else{
+    return defaultRouter(req, res, next);
+
+  }
 });
 
 let SERVER_PORT = 8090;
