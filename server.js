@@ -15,13 +15,14 @@ defaultRouter.get('/', (req,res) => {
 app.use((req, res, next) => {
   const parts = req.hostname.split('.');
 
-  if(parts.length>1){
-    return userCustomRouter(req, res, next);
-  }
-  else{
-    return defaultRouter(req, res, next);
-
-  }
+  res.send(parts)
+  // if(parts.length>1){
+  //   return userCustomRouter(req, res, next);
+  // }
+  // else{
+  //   return defaultRouter(req, res, next);
+  //
+  // }
 });
 
 let SERVER_PORT = 8090;
