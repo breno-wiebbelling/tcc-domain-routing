@@ -17,17 +17,18 @@ const getUserHostName = (req) => {
 const obtainHttpCall = (req) => {
   let uri = `${BASE_URL_HOST}/simulation/simulationResult`
   let method = req.method;
-  
-  console.log({ 
-    httpfeed: JSON.stringify({ uri: req.params[0], userHost: getUserHostName(req) }) 
-  })
+  let userHost = getUserHostName(req);
+
+  if(req.originalUrl === "/favicon.ico"){
+    return () => {}
+  }
 
   switch(method){
     case "POST":
       return () => {
           return axios.post(
             uri, 
-            { uri: req.params[0], userHost: getUserHostName(req), body: req.body }
+            { uri: req.originalUrl, userHost: userHost, body: req.body }
           )
         }
     default:
@@ -36,7 +37,7 @@ const obtainHttpCall = (req) => {
             uri,
             { 
               headers: { 
-                httpfeed: JSON.stringify({ uri: req.params[0], userHost: getUserHostName(req) }) 
+                httpfeed: JSON.stringify({ uri: req.originalUrl, userHost: userHost }) 
               } 
             }
           )
