@@ -66,14 +66,16 @@ defaultRouter.get('/', (req,res) => {
 app.use((req, res, next) => {
   const subdomains = req.hostname.split('.');
   console.log(subdomains)
-  let hostSize = ((subdomains[subdomains.length-1]) === 'localhost') ? 1 : 2;
+  // let hostSize = ((subdomains[subdomains.length-1]) === 'localhost') ? 1 : 2;
 
-  if(subdomains.length>hostSize){
-    return userCustomRouter(req, res, next);
-  }
-  else{
-    return defaultRouter(req, res, next);
-  }
+  // if(subdomains.length>hostSize){
+  //   return userCustomRouter(req, res, next);
+  // }
+  // else{
+  //   return defaultRouter(req, res, next);
+  // }
+
+  res.send('ok')
 });
 
 app.get('/', (req,res)=>{
