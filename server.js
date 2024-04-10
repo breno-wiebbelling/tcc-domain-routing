@@ -8,7 +8,8 @@ app.use(express.urlencoded({extended:false}));
 const userCustomRouter = express.Router();
 const defaultRouter = express.Router();
 
-const BASE_URL_HOST = "http://localhost:8080"
+const BASE_URL_HOST = "https://tcc-back-end.vercel.app"
+//http://localhost:8080",
 
 const getUserHostName = (req) => {
   return req.hostname.split('.')[0]
@@ -63,6 +64,7 @@ defaultRouter.get('/', (req,res) => {
 
 app.use((req, res, next) => {
   const subdomains = req.hostname.split('.');
+  console.log(subdomains)
   let hostSize = ((subdomains[subdomains.length-1]) === 'localhost') ? 1 : 2;
 
   if(subdomains.length>hostSize){
