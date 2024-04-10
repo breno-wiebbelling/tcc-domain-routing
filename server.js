@@ -59,28 +59,9 @@ userCustomRouter.use('*',async (req, res) => {
   }
 });
 
-defaultRouter.get('/', (req,res) => {
-  res.redirect(FRONT_BASE_URL)
-})
-
 app.use((req, res, next) => {
-  const subdomains = req.hostname.split('.');
-  console.log(subdomains)
-  // let hostSize = ((subdomains[subdomains.length-1]) === 'localhost') ? 1 : 2;
-
-  // if(subdomains.length>hostSize){
-  //   return userCustomRouter(req, res, next);
-  // }
-  // else{
-  //   return defaultRouter(req, res, next);
-  // }
-
-  res.send('ok')
+  return userCustomRouter(req, res, next);
 });
-
-app.get('/', (req,res)=>{
-  res.send('ok')
-})
 
 let SERVER_PORT = 8083;
 app.listen(SERVER_PORT, () => {
