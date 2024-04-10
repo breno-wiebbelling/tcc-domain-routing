@@ -10,6 +10,7 @@ const defaultRouter = express.Router();
 
 const BASE_URL_HOST = "https://tcc-back-end.vercel.app"
 //http://localhost:8080",
+const FRONT_BASE_URL = "https://tcc-front-roan.vercel.app/";
 
 const getUserHostName = (req) => {
   return req.hostname.split('.')[0]
@@ -59,7 +60,7 @@ userCustomRouter.use('*',async (req, res) => {
 });
 
 defaultRouter.get('/', (req,res) => {
-  res.send('Default')
+  res.redirect(FRONT_BASE_URL)
 })
 
 app.use((req, res, next) => {
