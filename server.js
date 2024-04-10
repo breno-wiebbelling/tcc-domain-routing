@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const axios = require('axios');
+require('dotenv').config()
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
@@ -8,9 +9,7 @@ app.use(express.urlencoded({extended:false}));
 const userCustomRouter = express.Router();
 const defaultRouter = express.Router();
 
-const BASE_URL_HOST = "https://tcc-back-end.vercel.app"
-//http://localhost:8080",
-const FRONT_BASE_URL = "https://tcc-front-roan.vercel.app/";
+const BASE_URL_HOST = process.env.BACKEND_HOST
 
 const getUserHostName = (req) => {
   return req.hostname.split('.')[0]
