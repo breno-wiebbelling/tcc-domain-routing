@@ -20,13 +20,11 @@ const obtainHttpCall = (req) => {
   let method = req.method;
   let userHost = getUserHostName(req);
 
-  console.log("original: "+req.originalUrl)
   if(req.originalUrl === "/favicon.ico"){
     return () => {}
   }
-
-  console.log("uri"+uri)
-
+  
+  console.log(method)
   switch(method){
     case "POST":
       return () => {
