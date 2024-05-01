@@ -24,7 +24,6 @@ const obtainHttpCall = (req) => {
     return () => {}
   }
   
-  console.log(method)
   switch(method){
     case "POST":
       return () => {
