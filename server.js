@@ -29,7 +29,7 @@ const obtainHttpCall = (req) => {
       return () => {
           return axios.post(
             uri, 
-            { uri: req.originalUrl, userHost: userHost, body: req.body }
+            { uri: req.originalUrl, userHost: userHost, body: JSON.stringify(req.body) }
           )
         }
     default:
