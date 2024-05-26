@@ -7,7 +7,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 const userCustomRouter = express.Router();
-const defaultRouter = express.Router();
 
 const BASE_URL_HOST = process.env.BACKEND_HOST
 
@@ -46,7 +45,7 @@ const obtainHttpCall = (req) => {
   }
 }
 
-userCustomRouter.use('*',async (req, res) => {
+userCustomRouter.use('*', async (req, res) => {
   try{
     let httpCall = obtainHttpCall(req);
     
