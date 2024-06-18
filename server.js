@@ -49,8 +49,17 @@ userCustomRouter.use('*', async (req, res) => {
   try{
     let httpCall = obtainHttpCall(req);
     
-    let response = await httpCall();
-    res.send(response['data']['simulationResult']);
+    try{
+      let response = await httpCall();
+      res.send(response['data']['simulationResult']);
+    }catch(err){
+      res.status(500)
+        .send( 
+          typeof err['response'] === "undefined" 
+            ? "Algo errado aconteceu. Tente novamente mais tarde!"
+            : String(err['response']['data']['error'])
+        )
+    }
   }
   catch(e){
     res.send(e.message)
@@ -59,6 +68,14 @@ userCustomRouter.use('*', async (req, res) => {
 
 app.use((req, res, next) => {
   return userCustomRouter(req, res, next);
+});
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    console.error('Bad JSON');
+    return res.status(400).send("Request inválido!");
+  }
+  next();
 });
 
 let SERVER_PORT = 8083;
